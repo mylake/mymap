@@ -8,9 +8,10 @@ module Api
 
     attr_reader :access_token
 
-    def initialize(user)
-      @id = user.id
-      @email = user.email
+    def initialize(params)
+      @params = ActionController::Parameters.new(params)
+      @key = @params[:key]
+      @secret = @params[:secret]
     end
 
     def run
@@ -23,15 +24,15 @@ module Api
     private
 
     def check_params
-      return if @id && @email
-      errors.add(:base, 'no id, email')
+      return if @key && @secret
+      errors.add(:base, 'no key or secret')
       false
     end
 
     def generate_access_token
       payload = {
-        id: @id,
-        email: @email,
+        key: @key,
+        secret: @secret,
         datetime: DateTime.now.to_i
       }
       @access_token = JWT.encode(payload, SECRET_KEY, 'HS256')
