@@ -1,0 +1,168 @@
+Rails:
+  Enabled: true
+
+AllCops:
+  DisplayCopNames: true
+  Exclude:
+    - bin/**/*
+    - config/**/*
+    - db/**/*
+    - log/**/*
+    - public/**/*
+    - spec/rails_helper.rb
+    - spec/spec_helper.rb
+    - tmp/**/*
+    - vendor/**/*
+    - node_modules/**/*
+    - Guardfile
+    - .gems/**/*
+    - app/models/concerns/*
+
+Metrics/ModuleLength:
+  CountComments: false  # count full line comments?
+  Max: 100
+  Enabled: false
+
+Style/AccessorMethodName:
+  Enabled: false
+
+Style/AndOr:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Style/EmptyLinesAroundClassBody:
+  Enabled: false
+
+Style/EmptyLinesAroundModuleBody:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/Semicolon:
+  AllowAsExpressionSeparator: true
+
+Style/StringLiterals:
+  Enabled: false
+
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/WordArray:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  CountComments: false  # count full line comments?
+  Max: 40
+
+Metrics/AbcSize:
+  Max: 120
+
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+Rails/TimeZone:
+  Enabled: false
+
+Rails/Delegate:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Style/RegexpLiteral:
+  AllowInnerSlashes: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/factories/**/*.rb'
+    - 'spec/support/**/*.rb'
+    - 'spec/config/*.rb'
+    - 'spec/**/*_spec.rb'
+    - 'spec/*_helper.rb'
+
+Style/SymbolProc:
+  Exclude:
+    - 'spec/factories/**/*.rb'
+    - 'spec/support/**/*.rb'
+    - 'spec/**/*_spec.rb'
+
+Rails/DynamicFindBy:
+  Whitelist:
+    - find_by_id
+    - find_by_domain
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'spec/factories/**/*.rb'
+    - 'spec/**/*_spec.rb'
+
+Rails/HttpPositionalArguments:
+  Exclude:
+    - 'spec/controllers/**/*_spec.rb'
+    - 'spec/requests/**/*_spec.rb'
+    - 'spec/features/**/*_spec.rb'
+    - 'spec/support/requests/**/*_helpers.rb'
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Style/MixinGrouping:
+  Exclude:
+    - 'spec/**/*_spec.rb'
+    - 'spec/config/*.rb'
+    - 'spec/rails_helper.rb'
+
+Rails/Blank:
+  Exclude:
+    - 'spec/support/common/domain_helpers.rb'
+    - 'spec/support/requests/cart_helpers.rb'
+
+Style/BlockComments:
+  Exclude:
+    - 'spec/spec_helper.rb'
+
+Style/FirstParameterIndentation:
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/ClassLength:
+  Max: 400
+
+Metrics/MethodLength:
+  Max: 100
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Security/YAMLLoad:
+  Enabled: false
+
+Style/FormatString:
+  Enabled: false
+
+Style/RaiseArgs:
+  Enabled: false
+
+Rails/HttpPositionalArguments:
+  Enabled: false # Rails4

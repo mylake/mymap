@@ -3,7 +3,7 @@ module Api
     extend ActiveSupport::Concern
 
     included do
-      include ::Api::ErrorHandlerConcern unless self.method_defined?(:raise_api_error!)
+      include ::Api::ErrorHandlerConcern unless method_defined?(:raise_api_error!)
     end
 
     private

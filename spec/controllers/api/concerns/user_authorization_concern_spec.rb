@@ -24,7 +24,7 @@ RSpec.describe Api::UserAuthorizationConcern, type: :controller, api: true do
   describe 'success result' do
     let(:headers) do
       {
-        'Authorization' => generate_authorization(user),
+        'Authorization' => generate_authorization(user)
       }
     end
     before { @request.env.merge!(headers) }
@@ -36,7 +36,7 @@ RSpec.describe Api::UserAuthorizationConcern, type: :controller, api: true do
     describe 'invalid token' do
       let(:headers) do
         {
-          'Authorization' => 'invalid token',
+          'Authorization' => 'invalid token'
         }
       end
 

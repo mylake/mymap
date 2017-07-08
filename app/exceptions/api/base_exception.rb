@@ -1,5 +1,5 @@
 module Api
-  class BaseException < ::Exception
+  class BaseException < RuntimeError
     attr_accessor :message, :data
 
     def initialize(data = {})
@@ -8,7 +8,7 @@ module Api
     end
 
     def http_status
-      fail 'You must define http status code'
+      raise 'You must define http status code'
     end
 
     def to_code

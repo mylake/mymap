@@ -18,13 +18,13 @@ module Api
       end
 
       def authorized?
-        fail "#authorized? not implement"
+        raise "#authorized? not implement"
       end
 
       private
 
       def find_user
-        @user = ::User.find_by_email(@email)
+        @user = ::User.find_by(email: @email)
         unless @user
           errors.add(:user, 'not found')
           throw :abort
@@ -32,7 +32,7 @@ module Api
       end
 
       def create_access_token
-        @user = User.new({ email: @email, password: @password })
+        @user = User.new(email: @email, password: @password)
         service = Api::UserAuthEncodeService.new(@user)
         service.run
         @access_token = service.access_token

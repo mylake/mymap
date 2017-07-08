@@ -3,7 +3,6 @@ module Api
 
     def http_status
       401
-
     end
   end
 end

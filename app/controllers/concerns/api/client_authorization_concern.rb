@@ -12,14 +12,14 @@ module Api
     private
 
     def authorize_client
-      return if is_ignore_auth?
+      return if ignore_auth?
       service = Api::ClientAuthService.new(fetch_header_value!('CS'), fetch_header_value!('TS'))
       unless service.run
         raise_api_error!(Api::AuthFailException, service.errors.full_messages)
       end
     end
 
-    def is_ignore_auth?
+    def ignore_auth?
       fetch_header_value!('CS') == IGNORE_AUTH_CHECKSUM && !Rails.env.production?
     end
 
@@ -27,14 +27,14 @@ module Api
       key2 = key.tr('-', '_')
       @header_params ||= ActionController::Parameters.new(request.headers.to_h)
       @header_params[key] ||
-      @header_params["HTTP_#{key}"] ||
-      @header_params["HTTP_X_#{key}"] ||
-      @header_params["X-#{key}"] ||
-      @header_params[key2] ||
-      @header_params["HTTP_#{key2}"] ||
-      @header_params["HTTP_X_#{key2}"] ||
-      @header_params["X-#{key2}"] ||
-      @header_params.require(key)
+        @header_params["HTTP_#{key}"] ||
+        @header_params["HTTP_X_#{key}"] ||
+        @header_params["X-#{key}"] ||
+        @header_params[key2] ||
+        @header_params["HTTP_#{key2}"] ||
+        @header_params["HTTP_X_#{key2}"] ||
+        @header_params["X-#{key2}"] ||
+        @header_params.require(key)
     end
 
   end
