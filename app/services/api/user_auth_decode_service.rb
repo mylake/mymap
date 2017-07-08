@@ -1,10 +1,11 @@
 module Api
-  class ClientAuthDecodeService < ::BaseService
+  class UserAuthDecodeService < ::BaseService
 
     SECRET_KEY = Api::ClientAuthEncodeService.const_get('SECRET_KEY')
     EXPIRED_INTERVAL = Api::ClientAuthEncodeService.const_get('EXPIRED_INTERVAL')
 
     before_run :check_access_token_exist?
+    attr_reader :api_current_user
 
     def initialize(access_token)
       @access_token = access_token
@@ -15,10 +16,10 @@ module Api
         begin
           decoded_token = JWT.decode(@access_token, SECRET_KEY, true, algorithm: 'HS256')
           decoded_token = HashWithIndifferentAccess.new(decoded_token.first)
-          @key = decoded_token[:key]
-          @secret = decoded_token[:secret]
+          @id = decoded_token[:id]
+          @email = decoded_token[:email]
           @datetime = decoded_token[:datetime]
-          not_expired? && is_third_party_register?
+          not_expired? && get_user
         rescue => e
           Rails.logger.info { "Api::ClientAuthDecode failed: #{e}" }
           errors.add(:base, 'unauthenticated')
@@ -41,8 +42,9 @@ module Api
       false
     end
 
-    def is_third_party_register?
-      return true if JwtAuthentication.registered?(@key, @secret)
+    def get_user?
+      @api_current_user = User.where(id: @id, email: @email).first
+      return true if @api_current_user
       errors.add(:base, 'unauthenticated')
       false
     end

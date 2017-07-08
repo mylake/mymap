@@ -1,5 +1,5 @@
 module Api
-  class ClientAuthEncodeService < ::BaseService
+  class UserAuthEncodeService < ::BaseService
 
     SECRET_KEY = 'esther-ilake-gogogo'.freeze
     EXPIRED_INTERVAL = 1.month
@@ -8,10 +8,9 @@ module Api
 
     attr_reader :access_token
 
-    def initialize(params)
-      @params = ActionController::Parameters.new(params)
-      @key = @params[:key]
-      @secret = @params[:secret]
+    def initialize(user)
+      @id = user.id
+      @email = user.email
     end
 
     def run
@@ -24,15 +23,15 @@ module Api
     private
 
     def check_params
-      return if @key && @secret
-      errors.add(:base, 'no key or secret')
+      return if @id && @emaik
+      errors.add(:base, 'no id or email')
       false
     end
 
     def generate_access_token
       payload = {
-        key: @key,
-        secret: @secret,
+        id: @id,
+        email: @email,
         datetime: DateTime.now.to_i
       }
       @access_token = JWT.encode(payload, SECRET_KEY, 'HS256')

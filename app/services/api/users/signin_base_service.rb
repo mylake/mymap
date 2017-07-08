@@ -33,7 +33,7 @@ module Api
 
       def create_access_token
         @user = User.new({ email: @email, password: @password })
-        service = Api::ClientAuthEncodeService.new(@user)
+        service = Api::UserAuthEncodeService.new(@user)
         service.run
         @access_token = service.access_token
       end
