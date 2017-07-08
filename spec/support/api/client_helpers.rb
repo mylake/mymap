@@ -2,13 +2,12 @@
 
 module Api
   module ClientHelpers
-    def api_request(method, path, params = {}, need_auth_header = true, *args)
-      if need_auth_header
-        args[0] ||= {}
-        args[0]['Authorization'] = generate_authorization
-        # args[0]['Authorization'] = 'estherilakegogogo'
-      end
-      send(method, path, params: params, headers: args)
+    def api_request(method, path, params = {}, author_user = nil, headers = {})
+      headers['Authorization'] = generate_authorization(author_user) if author_user
+      headers['X-TS'] = Time.now.to_i
+      headers['X-CS'] = generate_checksum(headers['X-TS'])
+      send(method, path, params, headers)
+      # send(method, path, params: params, headers: args)
       JSON.parse(response.body)
     end
   end

@@ -1,12 +1,7 @@
 module Common
   module ApiHelpers
-    def generate_authorization
-      jwt_auth = create(:jwt_authentication)
-      auth_params = {
-        key: jwt_auth.key,
-        secret: jwt_auth.secret
-      }
-      service = Api::ClientAuthEncodeService.new(auth_params)
+    def generate_authorization(user)
+      service = Api::UserAuthEncodeService.new(user)
       service.run
       service.access_token
     end

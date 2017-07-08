@@ -1,8 +1,8 @@
 module Api
   class UserAuthDecodeService < ::BaseService
 
-    SECRET_KEY = Api::ClientAuthEncodeService.const_get('SECRET_KEY')
-    EXPIRED_INTERVAL = Api::ClientAuthEncodeService.const_get('EXPIRED_INTERVAL')
+    SECRET_KEY = Api::UserAuthEncodeService.const_get('SECRET_KEY')
+    EXPIRED_INTERVAL = Api::UserAuthEncodeService.const_get('EXPIRED_INTERVAL')
 
     before_run :check_access_token_exist?
     attr_reader :api_current_user
@@ -42,7 +42,7 @@ module Api
       false
     end
 
-    def get_user?
+    def get_user
       @api_current_user = User.where(id: @id, email: @email).first
       return true if @api_current_user
       errors.add(:base, 'unauthenticated')
