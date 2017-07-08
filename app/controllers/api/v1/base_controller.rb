@@ -3,6 +3,7 @@ module Api
     class BaseController < ActionController::Base
       include ::Api::ErrorHandlerConcern
       include ::Api::ClientAuthorizationConcern
+      include ::Api::UserAuthorizationConcern
 
       before_action :set_default_format
 

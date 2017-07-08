@@ -10,5 +10,12 @@ module Common
       service.run
       service.access_token
     end
+
+    def generate_checksum(ts = nil)
+      ts ||= Time.now.to_i
+      client_key = Api::ClientAuthService::TEMP_SECRET_KEY
+      Digest::MD5.hexdigest("#{client_key}-#{ts}")
+    end
+
   end
 end
