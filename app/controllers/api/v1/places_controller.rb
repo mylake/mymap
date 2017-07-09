@@ -4,6 +4,10 @@ module Api
 
       before_action :api_authenticate_user!
 
+      def index
+        @places = api_current_user.places
+      end
+
       def create
         service = Api::Places::CreateService.new(place_params, api_current_user)
         if service.run

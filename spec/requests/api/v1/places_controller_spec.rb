@@ -1,8 +1,18 @@
 require 'rails_helper'
 
 describe Api::V1::PlacesController, type: :request, api: true do
+
+  let!(:user) { create(:user) }
+
+  describe 'GET /api/v1/places' do
+    context '200' do
+      # TODO paginate
+      subject! { api_request :get, '/api/v1/places', {}, user }
+      it { expect(response).to have_http_status(200) }
+    end
+  end
+
   describe 'POST /api/v1/places' do
-    let!(:user) { create(:user) }
     let(:params) {
       {
         name: 'kfc',
@@ -20,4 +30,11 @@ describe Api::V1::PlacesController, type: :request, api: true do
       it { expect(user.places.count).to eq(1) }
     end
   end
+
+  describe 'PATCH /api/v1/places/:id' do
+  end
+
+  describe 'DELETE /api/v1/places/:id' do
+  end
+
 end
