@@ -17,6 +17,15 @@ module Api
         end
       end
 
+      def update
+        service = Api::Places::UpdateService.new(params[:id], place_params, api_current_user)
+        if service.run
+          @place = service.place
+        else
+          raise_api_error!(Api::CreateFailException, service.errors.full_messages)
+        end
+      end
+
       private
 
       def place_params
