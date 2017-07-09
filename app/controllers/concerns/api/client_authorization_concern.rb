@@ -1,6 +1,7 @@
 module Api
   module ClientAuthorizationConcern
     extend ActiveSupport::Concern
+    include FetchHeaderConcern
 
     IGNORE_AUTH_CHECKSUM = 'estherilakegogogo'.freeze
 
@@ -21,20 +22,6 @@ module Api
 
     def ignore_auth?
       fetch_header_value!('CS') == IGNORE_AUTH_CHECKSUM && !Rails.env.production?
-    end
-
-    def fetch_header_value!(key)
-      key2 = key.tr('-', '_')
-      @header_params ||= ActionController::Parameters.new(request.headers.to_h)
-      @header_params[key] ||
-        @header_params["HTTP_#{key}"] ||
-        @header_params["HTTP_X_#{key}"] ||
-        @header_params["X-#{key}"] ||
-        @header_params[key2] ||
-        @header_params["HTTP_#{key2}"] ||
-        @header_params["HTTP_X_#{key2}"] ||
-        @header_params["X-#{key2}"] ||
-        @header_params.require(key)
     end
 
   end

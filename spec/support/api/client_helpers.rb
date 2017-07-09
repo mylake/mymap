@@ -3,7 +3,7 @@
 module Api
   module ClientHelpers
     def api_request(method, path, params = {}, author_user = nil, headers = {})
-      headers['Authorization'] = generate_authorization(author_user) if author_user
+      headers['AUTHORIZATION'] = generate_authorization(author_user) if author_user
       headers['X-TS'] = Time.now.to_i
       headers['X-CS'] = generate_checksum(headers['X-TS'])
       send(method, path, params, headers)

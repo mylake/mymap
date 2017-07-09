@@ -1,6 +1,7 @@
 module Api
   module UserAuthorizationConcern
     extend ActiveSupport::Concern
+    include FetchHeaderConcern
 
     included do
       include ::Api::ErrorHandlerConcern unless method_defined?(:raise_api_error!)
@@ -17,7 +18,7 @@ module Api
     end
 
     def api_current_user
-      @api_user_auth_service ||= Api::UserAuthDecodeService.new(request.headers.env['Authorization'])
+      @api_user_auth_service ||= Api::UserAuthDecodeService.new(fetch_header_value!('AUTHORIZATION'))
       @api_user_auth_service.run
       @api_current_user ||= @api_user_auth_service.api_current_user
     end
