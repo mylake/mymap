@@ -26,6 +26,15 @@ module Api
         end
       end
 
+      def destroy
+        service = Api::Places::DeleteService.new(params[:id], api_current_user)
+        if service.run
+          render json: { status: 'ok' }
+        else
+          raise_api_error!(Api::CreateFailException, service.errors.full_messages)
+        end
+      end
+
       private
 
       def place_params

@@ -1,19 +1,17 @@
 module Api
   module Places
-    class UpdateService < ::BaseService
+    class DeleteService < ::BaseService
 
-      attr_reader :place
       validate :check_my_place
 
-      def initialize(place_id, params, user)
+      def initialize(place_id, user)
         @place_id = place_id
-        @params = params
         @user = user
       end
 
       def run
         return false unless valid?
-        @place.update(@params)
+        @place.destroy
       end
 
       private

@@ -26,12 +26,12 @@ describe Api::V1::PlacesController, type: :request, api: true do
       subject! { api_request :post, '/api/v1/places', { place: params }, user }
       it { expect(response).to have_http_status(200) }
       it { expect(JSON.parse(response.body)['place']['name']).to be_present }
-      it { expect(user.places.count).to eq(1) }
+      it { expect(user.places.last.name).to eq('kfc') }
     end
   end
 
   describe 'PATCH /api/v1/places/:id' do
-    let!(:place) { create(:place) }
+    let!(:place) { create(:place, user_id: user.id) }
     let(:params) {
       {
         name: 'update_kfc',
@@ -49,6 +49,11 @@ describe Api::V1::PlacesController, type: :request, api: true do
   end
 
   describe 'DELETE /api/v1/places/:id' do
+    let!(:place) { create(:place, user_id: user.id) }
+    context '200' do
+      subject! { api_request :delete, "/api/v1/places/#{place.id}", {}, user }
+      it { expect(response).to have_http_status(200) }
+    end
   end
 
 end
